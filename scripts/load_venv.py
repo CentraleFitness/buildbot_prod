@@ -20,7 +20,7 @@ build_dir = f"{WORKERS_DIR}/{args.worker}/{args.builder}/build/"
 
 if not os.path.isdir(venv_dir):
     print(f"Creating the virtualenv in {venv_dir}")
-    ret = exec_cmd(["python3", "-m", "venv", venv_dir])
+    ret = exec_cmd(f"python3 -m venv {venv_dir}")
     if ret["code"] != 0:
         print(ret["out"])
         exit(1)
