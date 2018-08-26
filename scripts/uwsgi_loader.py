@@ -16,12 +16,12 @@ def is_pid_running(pid_file: str) -> bool:
 
 parser = argparse.ArgumentParser(description="Start or reload a UWSGI process")
 parser.add_argument("api", type=str)
-parser.add_argument("builddir", type=str)
+parser.add_argument("uwsgidir", type=str)
 args = parser.parse_args()
 
 if is_pid_running(f"{PID_BASEDIR}/{args.api}.pid"):
     print("Reloading uwsgi...")
-    exec_cmd(f"{args.builddir}/uwsgi/reload.sh")
+    exec_cmd(f"{args.uwsgidir}/reload.sh")
 else:
     print("Starting uwsgi...")
-    exec_cmd(f"{args.builddir}/uwsgi/start.sh")
+    exec_cmd(f"{args.uwsgidir}/start.sh")

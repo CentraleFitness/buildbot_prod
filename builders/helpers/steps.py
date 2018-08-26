@@ -9,7 +9,7 @@ def venv_step(worker: str, builder: str, requirements: str='requirements.txt'):
         haltOnFailure=True,
         timeout=600)
 
-def uwsgi_step(api: str, builddir: str):
+def uwsgi_step(api: str, uwsgi_dir: str):
     return steps.ShellCommand(
         command=[
-            "python3", "/home/buildbot/scripts/uwsgi_loader.py", api, buildir])
+            "python3", "/var/buildbot/scripts/uwsgi_loader.py", api, uwsgi_dir])
