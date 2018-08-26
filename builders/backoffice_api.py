@@ -11,7 +11,7 @@ backoffice_api_factory = util.BuildFactory([
               mode='incremental'),
     venv_step('backoffice_api', 'BackofficeApi'),
     steps.ShellCommand(
-        command=[PYTHON_EX, "emailproj/manage.py", "migrate"]),
+        command=[PYTHON_EX, "manage.py", "migrate"]),
     uwsgi_step('backoffice_api', UWSGI_DIR)
 ])
 
