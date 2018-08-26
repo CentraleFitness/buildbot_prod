@@ -1,4 +1,6 @@
-def exec_cmd(cmd: list, timeout: int=60) -> dict:
+import subprocess
+
+def exec_cmd(cmd, timeout: int=60) -> dict:
     """Execute a given command in the shell"""
     ret = {"code": 0}
         try:

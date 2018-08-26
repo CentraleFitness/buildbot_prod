@@ -24,7 +24,7 @@ if not os.path.isdir(venv_dir):
     if ret["code"] != 0:
         print(ret["out"])
         exit(1)
-ret = exec_cmd([venv_dir + 'bin/pip', 'install', '-r', build_dir + args.requirements])
+ret = exec_cmd(f"{venv_dir}bin/pip install -r {build_dir}{args.requirements}")
 if ret["code"] != 0:
     print(ret["out"])
     exit(2)
