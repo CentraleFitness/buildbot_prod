@@ -2,9 +2,9 @@ from buildbot.plugins import util, steps
 
 from .helpers.steps import venv_step, uwsgi_step
 
-WORKDIR = "emailproj/"
+WORKDIR = "./emailproj"
 UWSGI_DIR = "/var/buildbot/workers/backoffice_api/BackofficeApi/build/emailproj/uwsgi"
-PYTHON_EX = "../../venv/bin/python3"
+PYTHON_EX = "/var/buildbot/workers/backoffice_api/BackofficeApi/venv/bin/python3"
 
 
 backoffice_api_factory = util.BuildFactory([
