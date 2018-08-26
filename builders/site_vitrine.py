@@ -6,7 +6,8 @@ site_vitrine_factory = util.BuildFactory([
               mode='incremental'),
     steps.ShellCommand(command=["yarn"]),
     steps.ShellCommand(command=["yarn", "build"]),
-    steps.ShellCommand(command=["screen", "-d", "-m", "yarn start"]),
+    steps.ShellCommand(command=["forever", "stop", "bin/www"]),
+    steps.ShellCommand(command=["forever", "start", "bin/www"]),
 ])
 
 site_vitrine_builder = util.BuilderConfig(
