@@ -2,7 +2,7 @@ from buildbot.plugins import util, steps
 
 
 site_vitrine_factory = util.BuildFactory([
-    steps.Git(repourl='https://github.com/CentraleFitness/site_vitrine.git',
+    steps.Git(repourl='git@github.com:CentraleFitness/site_vitrine.git',
               mode='incremental'),
     steps.ShellCommand(command=["yarn"]),
     steps.ShellCommand(command=["yarn", "build"]),

@@ -8,8 +8,8 @@ PYTHON_EX = "../../venv/bin/python3"
 
 
 backoffice_api_factory = util.BuildFactory([
-    steps.Git(repourl='https://github.com/CentraleFitness/backoffice-server.git',
-              mode='incremental', origin='origin/master'),
+    steps.Git(repourl='git@github.com:CentraleFitness/backoffice-server.git',
+              mode='incremental'),
     venv_step('backoffice_api', 'BackofficeApi'),
     steps.ShellCommand(
         command=[PYTHON_EX, "manage.py", "migrate"], workdir=WORKDIR),
