@@ -28,14 +28,15 @@ set -e
 
 #### CONFIGURATION (override in /etc/default/django)
 
-# django project names/directories
-DJANGO_SITES="backoffice"
+SITE="backoffice_api"
 
+# django project names/directories
 # path to the directory with your django projects
-SITES_PATH=/var/buildbot/workers/backoffice_api/Nbuild/BackofficeApi/build/
+ROOT_PATH=/var/buildbot/workers/backoffice_api/Nbuild/BackofficeApi/build/
 # path to the directory conrtaining all site-specific virtualenvs 
 # (see http://pypi.python.org/pypi/virtualenv for more information)
-ENVIRONMENT_PATH=$SITES_PATH/environment
+
+VENV_EX_PATH=$SITES_PATH/venv/bin/python
 
 # path to the directory for socket and pid files
 RUNFILES_PATH=/var/run/
@@ -56,7 +57,7 @@ if [ -f /etc/default/django ] ; then
 fi
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DESC="Django FastCGI servers"
+DESC="Backoffice API"
 NAME=$0
 SCRIPTNAME=/etc/init.d/$NAME
 mkdir -p $RUNFILES_PATH
@@ -73,32 +74,19 @@ fi
 #
 d_start()
 {
-    # Starting all Django FastCGI processes
-    for SITE in $DJANGO_SITES
-    do
-        echo -n " $SITE"
-        
-        # find python binary to use     
-        if [ -f $ENVIRONMENT_PATH/$SITE/bin/python ]; then
-           PYTHON=$ENVIRONMENT_PATH/$SITE/bin/python
-        else
-           PYTHON=`which python`
-        fi
-
-        if [ -f $RUNFILES_PATH/$SITE.pid ]; then
-            echo -n " already running"
-        else
-            start-stop-daemon --start --quiet \
-                       --pidfile $RUNFILES_PATH/$SITE.pid \
-                       --chuid $RUN_AS --exec /usr/bin/env -- $PYTHON \
-                       $SITES_PATH/$SITE/manage.py runfcgi \
-                       protocol=fcgi method=threaded maxrequests=$MAXREQUESTS \
-                       socket=$RUNFILES_PATH/$SITE.socket \
-                       pidfile=$RUNFILES_PATH/$SITE.pid
-            chmod 400 $RUNFILES_PATH/$SITE.pid
-        fi
-        sleep 1
-    done
+    if [ -f $RUNFILES_PATH/$SITE.pid ]; then
+        echo -n " already running"
+    else
+        start-stop-daemon --start --quiet \
+                    --pidfile $RUNFILES_PATH/$SITE.pid \
+                    --chuid $RUN_AS --exec /usr/bin/env -- $PYTHON \
+                    $ROOT_PATH/manage.py runfcgi \
+                    protocol=fcgi method=threaded maxrequests=$MAXREQUESTS \
+                    socket=$RUNFILES_PATH/$SITE.socket \
+                    pidfile=$RUNFILES_PATH/$SITE.pid
+        chmod 400 $RUNFILES_PATH/$SITE.pid
+    fi
+    sleep 1
 }
 
 #
@@ -106,16 +94,12 @@ d_start()
 #
 d_stop() {
     # Killing all Django FastCGI processes running
-    for SITE in $DJANGO_SITES
-    do
-        echo -n " $SITE"
-        start-stop-daemon --stop --quiet --pidfile $RUNFILES_PATH/$SITE.pid \
-                          || echo -n " not running"
-        if [ -f $RUNFILES_PATH/$SITE.pid ]; then
-           rm -f $RUNFILES_PATH/$SITE.pid
-        fi
-        sleep 1
-    done
+    start-stop-daemon --stop --quiet --pidfile $RUNFILES_PATH/$SITE.pid \
+                        || echo -n " not running"
+    if [ -f $RUNFILES_PATH/$SITE.pid ]; then
+        rm -f $RUNFILES_PATH/$SITE.pid
+    fi
+    sleep 1
 }
 
 ACTION="$1"
