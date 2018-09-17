@@ -14,8 +14,8 @@ set -e
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/var/buildbot/workers/backoffice_api/venv/bin/uwsgi
-RUN_DIR=/var/run/
-LOG_DIR=/var/log/
+RUN_DIR=/var/run
+LOG_DIR=/var/log
 VASSALS_DIR=/etc/uwsgi/vassals
 NAME=backoffice_api
 DESC="Backoffice API"
