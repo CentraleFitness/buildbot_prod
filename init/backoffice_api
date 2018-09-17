@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 ### BEGIN INIT INFO
-# Provides:          uwsgi-emperor
+# Provides:          backoffice_api
 # Required-Start:    $all
 # Required-Stop:     $all
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: starts the uwsgi emperor app server
-# Description:       starts uwsgi emperor app server using start-stop-daemon
+# Short-Description: starts the backoffice api
+# Description:       starts uwsgi backoffice api using start-stop-daemon
 ### END INIT INFO
 set -e
 
@@ -42,6 +42,7 @@ do_start()
 {
     local PIDFILE=$RUN_DIR/$NAME.pid
     local START_OPTS=" \
+        --emperor $VASSALS_DIR \
         --pidfile $PIDFILE \
         --master \
         --uid $OWNER
