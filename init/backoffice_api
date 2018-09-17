@@ -32,7 +32,7 @@ SITE="backoffice_api"
 
 # django project names/directories
 # path to the directory with your django projects
-ROOT_PATH=/var/buildbot/workers/backoffice_api/Nbuild/BackofficeApi/build
+ROOT_PATH=/var/buildbot/workers/backoffice_api/BackofficeApi/build
 # path to the directory conrtaining all site-specific virtualenvs 
 # (see http://pypi.python.org/pypi/virtualenv for more information)
 
