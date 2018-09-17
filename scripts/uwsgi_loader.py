@@ -1,4 +1,5 @@
 import os
+import sys
 import argparse
 
 from utils.exec import exec_cmd
@@ -21,7 +22,8 @@ args = parser.parse_args()
 
 if is_pid_running(f"{PID_BASEDIR}/{args.api}.pid"):
     print("Reloading uwsgi...")
-    exec_cmd(f"{args.uwsgidir}/reload.sh")
+    ret = exec_cmd(f"{args.uwsgidir}/reload.sh")
 else:
     print("Starting uwsgi...")
-    exec_cmd(f"{args.uwsgidir}/start.sh")
+    ret = exec_cmd(f"{args.uwsgidir}/start.sh")
+sys.exit(ret["code"])
