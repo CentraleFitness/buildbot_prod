@@ -43,7 +43,7 @@ RUNFILES_PATH=/var/run/
 
 # please make sure this is NOT root
 # local user prefered, www-data accepted
-RUN_AS=root
+RUN_AS=www-data
 
 # maximum requests before fast-cgi process respawns
 # (a.k.a. get killed and let live)
@@ -79,7 +79,7 @@ d_start()
     else
         start-stop-daemon --start --quiet \
                     --pidfile $RUNFILES_PATH/$SITE.pid \
-                    --chuid $RUN_AS --exec /usr/bin/env -- $PYTHON \
+                    --chuid $RUN_AS --exec /usr/bin/env -- $VENV_EX_PATH \
                     $ROOT_PATH/manage.py runfcgi \
                     protocol=fcgi method=threaded maxrequests=$MAXREQUESTS \
                     socket=$RUNFILES_PATH/$SITE.socket \
