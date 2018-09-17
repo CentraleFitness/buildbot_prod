@@ -22,7 +22,7 @@ DESC="Backoffice API"
 OWNER=www-data
 GROUP=www-data
 
-[[ -x $DAEMON ]] || exit 0
+[[ -x $DAEMON ]] || echo "Daemon does not exist" || exit 0
 [[ -d $RUN_DIR ]] || mkdir $RUN_DIR && chown $OWNER:$GROUP $RUN_DIR
 [[ -d $LOG_DIR ]] || mkdir $LOG_DIR && chown $OWNER:$GROUP $LOG_DIR
 
@@ -44,7 +44,9 @@ do_start()
     local START_OPTS=" \
         --pidfile $PIDFILE \
         --master \
-        --daemonize $LOG_DIR/uwsgi-emperor.log"
+        --uid $OWNER
+        --gid $GROUP
+        --daemonize $LOG_DIR/$NAME.log"
     if do_pid_check $PIDFILE; then
         $DAEMON $START_OPTS
     else
