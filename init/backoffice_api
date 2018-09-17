@@ -33,17 +33,17 @@ SITE="backoffice_api"
 # django project names/directories
 # path to the directory with your django projects
 SITE_PATH=/var/buildbot/workers/backoffice_api/BackofficeApi/build
-# path to the directory conrtaining all site-specific virtualenvs 
+# path to the directory conrtaining all site-specific virtualenvs
 # (see http://pypi.python.org/pypi/virtualenv for more information)
 
-VENV_EX_PATH=$SITE_PATH/venv/bin/python
+VENV_EX_PATH=/var/buildbot/workers/backoffice_api/venv/bin/python
 
 # path to the directory for socket and pid files
 RUNFILES_PATH=/var/run/
 
 # please make sure this is NOT root
 # local user prefered, www-data accepted
-RUN_AS=www-data
+RUN_AS=root
 
 # maximum requests before fast-cgi process respawns
 # (a.k.a. get killed and let live)
@@ -80,7 +80,7 @@ d_start()
         start-stop-daemon --start --quiet \
                     --pidfile $RUNFILES_PATH/$SITE.pid \
                     --chuid $RUN_AS --exec /usr/bin/env -- $VENV_EX_PATH \
-                    $ROOT_PATH/manage.py runfcgi \
+                    $SITE_PATH/manage.py runfcgi \
                     protocol=fcgi method=threaded maxrequests=$MAXREQUESTS \
                     socket=$RUNFILES_PATH/$SITE.socket \
                     pidfile=$RUNFILES_PATH/$SITE.pid
