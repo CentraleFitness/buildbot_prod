@@ -32,11 +32,11 @@ SITE="backoffice_api"
 
 # django project names/directories
 # path to the directory with your django projects
-ROOT_PATH=/var/buildbot/workers/backoffice_api/BackofficeApi/build
+SITE_PATH=/var/buildbot/workers/backoffice_api/BackofficeApi/build
 # path to the directory conrtaining all site-specific virtualenvs 
 # (see http://pypi.python.org/pypi/virtualenv for more information)
 
-VENV_EX_PATH=$SITES_PATH/venv/bin/python
+VENV_EX_PATH=$SITE_PATH/venv/bin/python
 
 # path to the directory for socket and pid files
 RUNFILES_PATH=/var/run/
@@ -118,15 +118,11 @@ case "$ACTION" in
 
     status)
         echo "Status of $DESC:"
-        for SITE in $DJANGO_SITES
-        do
-            echo -n "  $SITE"
-            if [ -f $RUNFILES_PATH/$SITE.pid ]; then
-                echo " running ($(cat $RUNFILES_PATH/$SITE.pid))"
-            else
-                echo " not running"
-            fi
-        done
+        if [ -f $RUNFILES_PATH/$SITE.pid ]; then
+            echo " running ($(cat $RUNFILES_PATH/$SITE.pid))"
+        else
+            echo " not running"
+        fi
         ;;
 
     restart|force-reload)
