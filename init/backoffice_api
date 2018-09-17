@@ -43,7 +43,7 @@ RUNFILES_PATH=/var/run/
 
 # please make sure this is NOT root
 # local user prefered, www-data accepted
-RUN_AS=www-data
+RUN_AS=root
 
 # maximum requests before fast-cgi process respawns
 # (a.k.a. get killed and let live)
