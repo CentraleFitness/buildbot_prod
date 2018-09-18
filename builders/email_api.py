@@ -12,7 +12,7 @@ email_api_builder = util.BuilderConfig(
         steps.Git(
             repourl='git@github.com:CentraleFitness/email_api.git',
             mode='incremental'),
-        venv_step('email_api', 'EmailApi'),
+        venv_step('email_api', 'EmailApi', 'emailproj/requirements.txt'),
         steps.ShellCommand(
             command=[
                 "mv", "emailproj/config/buildbot.py",
