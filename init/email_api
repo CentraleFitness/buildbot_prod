@@ -24,7 +24,7 @@ DESC="Email API"
 PROCESSES=5
 LISTEN=50
 HARAKIRI=120
-STATS_PORT=6666
+STATS_PORT=6667
 
 [[ -x $DAEMON ]] || echo "Daemon does not exist" || exit 0
 [[ -d $RUN_DIR ]] || mkdir $RUN_DIR && chown $OWNER:$GROUP $RUN_DIR
