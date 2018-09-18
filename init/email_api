@@ -14,6 +14,8 @@ set -e
 
 DAEMON=/var/buildbot/workers/email_api/venv/bin/uwsgi
 CHDIR=/var/buildbot/workers/email_api/EmailApi/build/emailproj
+WSGI_FILE=emailproj/wsgi.py
+PORT=5542
 RUN_DIR=/var/run
 LOG_DIR=/var/log
 NAME=email_api
@@ -47,9 +49,9 @@ do_start()
     local PIDFILE=$RUN_DIR/$NAME.pid
     local START_OPTS="                      \
         --master                            \
-        --http 0.0.0.0:5542                 \
+        --http 0.0.0.0:$PORT                \
         --chdir $CHDIR                      \
-        --wsgi-file emailproj/emailproj/wsgi.py      \
+        --wsgi-file $WSGI_FILE              \
         --processes $PROCESSES              \
         --enable-threads                    \
         --listen $LISTEN                    \
