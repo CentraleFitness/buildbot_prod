@@ -47,9 +47,9 @@ do_start()
     local PIDFILE=$RUN_DIR/$NAME.pid
     local START_OPTS="                      \
         --master                            \
-        --socket 0.0.0.0:5541               \
+        --http 0.0.0.0:5541                 \
         --chdir $CHDIR                      \
-        -w backoffice.wsgi:application      \
+        --wsgi-file backoffice/wsgi.py      \
         --processes $PROCESSES              \
         --enable-threads                    \
         --listen $LISTEN                    \
