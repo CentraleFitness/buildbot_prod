@@ -18,7 +18,7 @@ def uwsgi_step(api: str, uwsgi_dir: str):
             PYTHON_EX, "/var/buildbot/scripts/uwsgi_loader.py", api, uwsgi_dir])
 
 def service_step(service: str, **kwargs):
-    cmd = [PYTHON_EX, "/var/buildbot/service.py", service]
+    cmd = [PYTHON_EX, "/var/buildbot/scripts/service.py", service]
     if 'pidfile' in kwargs:
         cmd.extend(['--pidfile', kwargs['pidfile']])
     return steps.ShellCommand(command=cmd)
