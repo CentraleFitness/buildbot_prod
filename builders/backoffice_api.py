@@ -1,6 +1,6 @@
 from buildbot.plugins import util, steps
 
-from .helpers.steps import venv_step, uwsgi_step, service_step
+from .helpers.steps import venv_step, service_step
 
 PYTHON_EX = "/var/buildbot/workers/backoffice_api/venv/bin/python3"
 
