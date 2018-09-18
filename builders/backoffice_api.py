@@ -13,7 +13,7 @@ backoffice_api_builder = util.BuilderConfig(
             repourl='git@github.com:CentraleFitness/backoffice-server.git',
             mode='incremental'),
         steps.ShellCommand(
-            command=["mv", "config/config_prod.py", "config/config.py7"]),
+            command=["mv", "config/config_prod.py", "config/config.py"]),
         venv_step('backoffice_api', 'BackofficeApi'),
         steps.ShellCommand(
             command=[PYTHON_EX, "manage.py", "migrate"]),
