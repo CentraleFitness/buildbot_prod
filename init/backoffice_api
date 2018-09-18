@@ -12,15 +12,19 @@
 set -e
 
 
-PATH=/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/var/buildbot/workers/backoffice_api/venv/bin/uwsgi
+CHDIR=/var/buildbot/workers/backoffice_api/BackofficeApi/build/
 RUN_DIR=/var/run
 LOG_DIR=/var/log
-VASSALS_DIR=/etc/uwsgi/vassals
 NAME=backoffice_api
 DESC="Backoffice API"
-OWNER=www-data
-GROUP=www-data
+# OWNER=www-data
+# GROUP=www-data
+
+PROCESSES=5
+LISTEN=50
+HARAKIRI=120
+STATS_PORT=6666
 
 [[ -x $DAEMON ]] || echo "Daemon does not exist" || exit 0
 [[ -d $RUN_DIR ]] || mkdir $RUN_DIR && chown $OWNER:$GROUP $RUN_DIR
@@ -41,12 +45,17 @@ do_pid_check()
 do_start()
 {
     local PIDFILE=$RUN_DIR/$NAME.pid
-    local START_OPTS=" \
-        --emperor $VASSALS_DIR \
-        --pidfile $PIDFILE \
-        --master \
-        --uid $OWNER
-        --gid $GROUP
+    local START_OPTS="                      \
+        --master                            \
+        --socket 0.0.0.0:5541               \
+        --chdir $CHDIR                      \
+        -w backoffice.wsgi:application      \
+        --processes $PROCESSES              \
+        --enable-threads                    \
+        --listen $LISTEN                    \
+        --stats :$STATS_PORT                \
+        --harakiri $HARAKIRI                \
+        --pidfile $PIDFILE                  \
         --daemonize $LOG_DIR/$NAME.log"
     if do_pid_check $PIDFILE; then
         $DAEMON $START_OPTS
