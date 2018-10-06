@@ -13,7 +13,7 @@ set -e
 
 
 DAEMON=/var/buildbot/workers/email_api/venv/bin/uwsgi
-CHDIR=/var/buildbot/workers/email_api/EmailApi/build/emailproj
+CHDIR=/var/buildbot/workers/email_api/EmailApi/build
 WSGI_FILE=emailproj/wsgi.py
 PORT=5542
 RUN_DIR=/var/run
