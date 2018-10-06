@@ -19,6 +19,8 @@ email_api_builder = util.BuilderConfig(
                 "emailproj/config/config.py"]),
         steps.ShellCommand(
             command=[PYTHON_EX, "emailproj/manage.py", "migrate"]),
+        steps.ShellCommand(
+            command=[PYTHON_EX, "emailproj/manage.py", "collectstatic"]),
         service_step('email_api', pidfile="/var/run/email_api.pid")
     ])
 )
