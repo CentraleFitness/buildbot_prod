@@ -12,15 +12,15 @@ email_api_builder = util.BuilderConfig(
         steps.Git(
             repourl='git@github.com:CentraleFitness/email_api.git',
             mode='incremental'),
-        venv_step('email_api', 'EmailApi', 'emailproj/requirements.txt'),
+        venv_step('email_api', 'EmailApi', 'requirements.txt'),
         steps.ShellCommand(
             command=[
-                "mv", "emailproj/config/buildbot.py",
-                "emailproj/config/config.py"]),
+                "mv", "config/buildbot.py",
+                "config/config.py"]),
         steps.ShellCommand(
-            command=[PYTHON_EX, "emailproj/manage.py", "migrate"]),
+            command=[PYTHON_EX, "manage.py", "migrate"]),
         steps.ShellCommand(
-            command=[PYTHON_EX, "emailproj/manage.py", "collectstatic"]),
+            command=[PYTHON_EX, "manage.py", "collectstatic"]),
         service_step('email_api', pidfile="/var/run/email_api.pid")
     ])
 )
